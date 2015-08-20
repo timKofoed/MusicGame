@@ -27,7 +27,7 @@ public class Node : MonoBehaviour
         material = noteType.material;
         render.material = material;
         render.material.color = noteType.colour;
-
+        
 
     }
 	
@@ -48,25 +48,11 @@ public class Node : MonoBehaviour
     //gives point and destroyes gameobject when clicked by mouse
 	public void OnMouseDown ()
 	{
-		//Debug.Log ("Click, Nu skal der INSTANTIATES ET PARTICLE SYSTEM, og DENNE DESTROYED");
-		//If dette Gameobject.tag = Bonus, Tilføjes bonuspoint eller Liv eller power-up;
-		//paticlesystem instantiates her
+        //Debug.Log ("Click, Nu skal der INSTANTIATES ET PARTICLE SYSTEM, og DENNE DESTROYED");
+        //If dette Gameobject.tag = Bonus, Tilføjes bonuspoint eller Liv eller power-up;
+        //paticlesystem instantiates her
 
-		if (type == "Bad")
-		{	
-			GameObject.Find("LevelMaster").GetComponent<LevelMaster>().LevelScore += hitValue;
-		}
-		
-		if (type == "Normal")
-		{
-            GameObject.Find("LevelMaster").GetComponent<LevelMaster>().LevelScore += hitValue;
-		}
-		
-		if (type == "Bonus")
-		{
-            GameObject.Find("LevelMaster").GetComponent<LevelMaster>().LevelScore += hitValue;
-			
-		}
+        levelMaster.GetComponent<LevelMaster>().LevelScore += hitValue;
 
 		Destroy (this.gameObject.transform.root.gameObject);
 

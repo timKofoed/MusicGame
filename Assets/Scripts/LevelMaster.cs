@@ -32,7 +32,7 @@ public class LevelMaster : MonoBehaviour {
     {
         Notes returnNote;
         //assigns a random number to the object that determines the value
-        int typeValue = Random.Range(0, AvailableNotes.Length - 1);
+        int typeValue = Random.Range(0, 3);
 
 
         returnNote = AvailableNotes[typeValue];
