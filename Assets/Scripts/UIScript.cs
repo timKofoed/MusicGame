@@ -7,6 +7,7 @@ public class UIScript : MonoBehaviour {
     //UI Font and Font size
     public Font newFont;
     public int newFontSize;
+    public Color newColor;
 
     //refernce to the Score Text 
     public Text textToUpdate;
@@ -18,6 +19,7 @@ public class UIScript : MonoBehaviour {
     {
 
         levelMaster = GameObject.Find("LevelMaster").GetComponent<LevelMaster>();
+        textToUpdate.color = newColor;
         textToUpdate.font = newFont;
         textToUpdate.fontSize = newFontSize;
     }

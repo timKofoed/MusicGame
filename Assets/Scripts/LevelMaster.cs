@@ -7,12 +7,15 @@ public class LevelMaster : MonoBehaviour {
 	public GameObject Spawn;
     public Notes[] AvailableNotes;
 
+    public bool gameOver = false;
+    
 
 
 
     // Use this for initialization
     void Start ()
 	{
+        
 		Spawn = GameObject.Find("SpawnPoint_Parent");
 		startLevel ();
 	}
@@ -60,6 +63,8 @@ public struct Notes
 
     public int hitValue;
     public int endValue;
+
+    //public RuntimeAnimatorController NoteAnimation;
 
 
 }

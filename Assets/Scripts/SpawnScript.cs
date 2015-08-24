@@ -8,19 +8,21 @@ public class SpawnScript : MonoBehaviour {
 
 	public bool GameStarted = false;
 
-    public float delay;
+    public float spawnDelay;
+    private LevelMaster levelMaster;
 
     void Start()
     {
-        float i = 2.0f;
-        StartCoroutine(startSpawn(i));
-        StartCoroutine(startNormalSpawn(i));
+        levelMaster = GameObject.Find("LevelMaster").GetComponent<LevelMaster>();
+
+        StartCoroutine(startSpawn());
+        
     }
 
 	void Update()
 	{
 
-        //SpawnNote();
+        
 
 	}
     
@@ -45,20 +47,23 @@ public class SpawnScript : MonoBehaviour {
         }
     }
 
-    IEnumerator startSpawn(float waitTime)
+    IEnumerator startSpawn()
     {
-        waitTime = 1.0f;
-        yield return new WaitForSeconds(waitTime);
         SpawnNote();
-        StartCoroutine(startSpawn(0));
+        yield return new WaitForSeconds(spawnDelay);
+
+        if (levelMaster.gameOver == false)
+        {
+            StartCoroutine(startSpawn());
+        }
     }
 
-    IEnumerator startNormalSpawn(float waitTime)
+    /*IEnumerator startNormalSpawn(float waitTime)
     {
         waitTime = 1.5f;
         yield return new WaitForSeconds(waitTime);
         SpawnNote();
         StartCoroutine(startSpawn(0));
-    }
+    }*/
 
 }

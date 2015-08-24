@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
+using System.IO;
 using System.Collections;
 
 public class Node : MonoBehaviour 
 {
-	public string type;
 
     public Material material;
 
@@ -12,6 +12,8 @@ public class Node : MonoBehaviour
 
     private LevelMaster levelMaster;
 
+    //private RuntimeAnimatorController anim;
+
     private Notes noteType;
 
 	//public GameObject paticleSystem;
@@ -19,6 +21,10 @@ public class Node : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+
+        //anim = noteType.NoteAnimation;
+        //gameObject.GetComponent<Animator>().runtimeAnimatorController = anim;
+
         Renderer render = gameObject.GetComponent<Renderer>();
         levelMaster = GameObject.Find("LevelMaster").GetComponent<LevelMaster>();
         noteType = levelMaster.DetermineType();
