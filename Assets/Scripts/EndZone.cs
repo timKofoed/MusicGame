@@ -3,13 +3,13 @@ using System.Collections;
 
 public class EndZone : MonoBehaviour {
 
-	GameObject LevelMaster;
+	LevelMaster levelMaster;
 	public int score;
 
 	// Use this for initialization
 	void Start ()
 	{
-		LevelMaster = GameObject.Find("LevelMaster");
+        levelMaster = GameObject.Find("LevelMaster").GetComponent<LevelMaster>();
 
 	}
 	
@@ -22,7 +22,7 @@ public class EndZone : MonoBehaviour {
 	void OnTriggerEnter (Collider other)
 	{
 
-        LevelMaster.GetComponent<LevelMaster>().LevelScore += other.GetComponent<Node>().endValue;
+        levelMaster.AddScore(other.GetComponent<Node>().endValue);
 
 
 		Destroy(other.gameObject.transform.root.gameObject);

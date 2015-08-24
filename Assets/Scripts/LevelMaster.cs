@@ -28,6 +28,12 @@ public class LevelMaster : MonoBehaviour {
 		Spawn.GetComponent<SpawnScript> ().GameStarted = true;
 	}
 
+    public void AddScore(int addedScore) //den tilføjede health kan både være positiv samt negativ
+    {
+        LevelScore += addedScore;
+        //Debug.Log("NEW HEALTH: " + score);
+    }
+
     public Notes DetermineType()
     {
         Notes returnNote;

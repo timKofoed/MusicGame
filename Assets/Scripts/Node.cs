@@ -52,7 +52,7 @@ public class Node : MonoBehaviour
         //If dette Gameobject.tag = Bonus, Tilføjes bonuspoint eller Liv eller power-up;
         //paticlesystem instantiates her
 
-        levelMaster.GetComponent<LevelMaster>().LevelScore += hitValue;
+        levelMaster.AddScore(hitValue);
 
 		Destroy (this.gameObject.transform.root.gameObject);
 

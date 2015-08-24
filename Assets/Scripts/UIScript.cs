@@ -1,24 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour {
 
-	int score;
+    //UI Font and Font size
+    public Font newFont;
+    public int newFontSize;
 
-	// Use this for initialization
-	void Start () {
+    //refernce to the Score Text 
+    public Text textToUpdate;
+
+    //Refernce to the LevelMaster Script
+    LevelMaster levelMaster;
+
+    void Start()
+    {
+
+        levelMaster = GameObject.Find("LevelMaster").GetComponent<LevelMaster>();
+        textToUpdate.font = newFont;
+        textToUpdate.fontSize = newFontSize;
+    }
 	
-	}
-	
-	// Update is called once per frame
 	void Update ()
 	{
-		score = GameObject.Find ("LevelMaster").GetComponent<LevelMaster> ().LevelScore;
+        //Updates the score on the canvas 
+        textToUpdate.text = levelMaster.LevelScore.ToString();
 	}
 
 	void OnGUI()
 	{
-		GUI.Label (new Rect (Screen.width - 150, 125, Screen.width, Screen.height), "score:" + score);
+
 
 	}
 }
