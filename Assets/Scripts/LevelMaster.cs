@@ -31,17 +31,17 @@ public class LevelMaster : MonoBehaviour {
 		Spawn.GetComponent<SpawnScript> ().GameStarted = true;
 	}
 
-    public void AddScore(int addedScore) //den tilføjede health kan både være positiv samt negativ
+    public void AddScore(int addedScore) 
     {
         LevelScore += addedScore;
-        //Debug.Log("NEW HEALTH: " + score);
+        
     }
 
     public Notes DetermineType()
     {
         Notes returnNote;
         //assigns a random number to the object that determines the value
-        int typeValue = Random.Range(0, 3);
+        int typeValue = Random.Range(0, AvailableNotes.Length);
 
 
         returnNote = AvailableNotes[typeValue];
