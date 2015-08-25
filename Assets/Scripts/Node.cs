@@ -16,7 +16,7 @@ public class Node : MonoBehaviour
 
     private Notes noteType;
 
-	//public GameObject paticleSystem;
+	public GameObject scoreSystem;
 
 	// Use this for initialization
 	void Start () 
@@ -59,7 +59,7 @@ public class Node : MonoBehaviour
         //paticlesystem instantiates her
 
         levelMaster.AddScore(hitValue);
-
+		Instantiate (scoreSystem, gameObject.transform.position, Quaternion.identity);
 		Destroy (this.gameObject.transform.root.gameObject);
 
 	}
