@@ -1,0 +1,387 @@
+From ba1b1c33e59c9e9390bfd5c3fa18736d5cb061e2 Mon Sep 17 00:00:00 2001
+From: Lasse <LasseLaFlair@gmail.com>
+Date: Mon, 24 Aug 2015 12:35:54 +0200
+Subject: [PATCH] Working Level Creator for the designers 2.0
+
+---
+ 2D_Sound_Tap-csharp.sln                            |   2 +-
+ 2D_Sound_Tap.sln                                   |   2 +-
+ Assets/Andet.meta                                  |   9 -------
+ Assets/Animation.meta                              |   9 -------
+ Assets/Animations.meta                             |   9 +++++++
+ Assets/Music.meta                                  |   9 -------
+ Assets/Prefab/Node_Holder_01.prefab                | Bin 9508 -> 9592 bytes
+ Assets/Scripts/LevelMaster.cs                      |   5 ++++
+ Assets/Scripts/Node.cs                             |   8 +++++-
+ Assets/Scripts/SpawnScript.cs                      |  27 ++++++++++++---------
+ Assets/Scripts/UIScript.cs                         |   2 ++
+ ...plate(duplicate it when making a new lvl).unity | Bin 33984 -> 37032 bytes
+ ...(duplicate it when making a new lvl).unity.meta |   2 +-
+ ...plate(duplicate it when making a new lvl).unity | Bin 36824 -> 37032 bytes
+ 14 files changed, 42 insertions(+), 42 deletions(-)
+ delete mode 100644 Assets/Andet.meta
+ delete mode 100644 Assets/Animation.meta
+ create mode 100644 Assets/Animations.meta
+ delete mode 100644 Assets/Music.meta
+
+diff --git a/2D_Sound_Tap-csharp.sln b/2D_Sound_Tap-csharp.sln
+index b056d5b..176c668 100644
+--- a/2D_Sound_Tap-csharp.sln
++++ b/2D_Sound_Tap-csharp.sln
+@@ -17,7 +17,7 @@ Global
+ 	GlobalSection(SolutionProperties) = preSolution
+ 		HideSolutionNode = FALSE
+ 	EndGlobalSection
+-																				GlobalSection(MonoDevelopProperties) = preSolution
++																					GlobalSection(MonoDevelopProperties) = preSolution
+ 		StartupItem = Assembly-CSharp.csproj
+ 		Policies = $0
+ 		$0.TextStylePolicy = $1
+diff --git a/2D_Sound_Tap.sln b/2D_Sound_Tap.sln
+index 5a98ca2..3a07048 100644
+--- a/2D_Sound_Tap.sln
++++ b/2D_Sound_Tap.sln
+@@ -17,7 +17,7 @@ Global
+ 	GlobalSection(SolutionProperties) = preSolution
+ 		HideSolutionNode = FALSE
+ 	EndGlobalSection
+-																			GlobalSection(MonoDevelopProperties) = preSolution
++																				GlobalSection(MonoDevelopProperties) = preSolution
+ 		StartupItem = Assembly-CSharp.csproj
+ 		Policies = $0
+ 		$0.TextStylePolicy = $1
+diff --git a/Assets/Andet.meta b/Assets/Andet.meta
+deleted file mode 100644
+index 05938a8..0000000
+--- a/Assets/Andet.meta
++++ /dev/null
+@@ -1,9 +0,0 @@
+-fileFormatVersion: 2
+-guid: b7fe94fe10930cb468a97402f3638e50
+-folderAsset: yes
+-timeCreated: 1439891002
+-licenseType: Free
+-DefaultImporter:
+-  userData: 
+-  assetBundleName: 
+-  assetBundleVariant: 
+diff --git a/Assets/Animation.meta b/Assets/Animation.meta
+deleted file mode 100644
+index f6cb885..0000000
+--- a/Assets/Animation.meta
++++ /dev/null
+@@ -1,9 +0,0 @@
+-fileFormatVersion: 2
+-guid: 430f90d02db0c19459c43efadf6f108a
+-folderAsset: yes
+-timeCreated: 1439455481
+-licenseType: Free
+-DefaultImporter:
+-  userData: 
+-  assetBundleName: 
+-  assetBundleVariant: 
+diff --git a/Assets/Animations.meta b/Assets/Animations.meta
+new file mode 100644
+index 0000000..3bfa7bc
+--- /dev/null
++++ b/Assets/Animations.meta
+@@ -0,0 +1,9 @@
++fileFormatVersion: 2
++guid: 9219a1578db267d439d6da9e878d35bf
++folderAsset: yes
++timeCreated: 1440408453
++licenseType: Free
++DefaultImporter:
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/Assets/Music.meta b/Assets/Music.meta
+deleted file mode 100644
+index 728d8da..0000000
+--- a/Assets/Music.meta
++++ /dev/null
+@@ -1,9 +0,0 @@
+-fileFormatVersion: 2
+-guid: 86a22d4085e3f454d8913b46d21029cb
+-folderAsset: yes
+-timeCreated: 1440066927
+-licenseType: Free
+-DefaultImporter:
+-  userData: 
+-  assetBundleName: 
+-  assetBundleVariant: 
+diff --git a/Assets/Prefab/Node_Holder_01.prefab b/Assets/Prefab/Node_Holder_01.prefab
+index b76a36bdea3128d741295ca3797816b688bc590b..83cd788fe88d699bcd978182e32536c97a4a4a77 100644
+GIT binary patch
+delta 359
+zcmZ4D^}|bmfkEK`1A}S>0|Ns;1A`*NL;)?4D_sl+-G4E+ePxP{>ACG73zQ4q=;zLq
+zssUtK05J~`O8_wg2Ll5m0~5nN28ISPAeRM*C4ra`Dz3-O&>#;{#vlb3X9TNv1oA=Z
+zrGXe?4n*8*@-HTHt$=`%A{!Oo#FEsa%)}f!hFmC%AtSRSEHS4vl_51R1<crN!+b+}
+zv#>lTBV)v5Sp{)c381M7lPwjjCU+{BsykRM>dQP7?KU~-c~{QfW!y|4>loyvA3kwb
+zEO1)qD|ki3dPyDA<c}(<lX;XmHvdtGVdU_CedVC_6jsN{2})-sUr~^mJVA+NvX62M
+zBh%!S%GVj0CpW63Pkx{v02Bvf0Z@SC#yjWdl@#UY<fIl&u2E3{Dqxu`p~?dQ#^75q
+
+delta 304
+zcmez2wZuz+fkEK_1B0px0|Ns;ko{nyfR;#P@D-h%HjmoM+Fu5rXkeBF%9(8Rb7xBR
+zU}k900P_9=fdr6d=wM)AWME=6WMF6jVUV~aP?*sJB+krm4=5%L)WZT4lLCozK*R%q
+z;#ok<2o#fsi!*}N>rVc~WX@euS&+(*k(!uOlCe3O`G)jn6L}6sMxV*H3gWB+K;uj%
+zM=Dqeiocwr{_O5)w>>$_^ru$)_b^TF1Bzam`gs2T%f5~cAM^b5uAX?nH2I@~@?<S#
+zuFW!vF^n8s*W(Ws+IH=m+@N%Zoe5~W0=EKCh3MoBN-UFelw%l~C!bWl&d4%(p-MVq
+Q%H%{v<w=S>lXFyg090sJumAu6
+
+diff --git a/Assets/Scripts/LevelMaster.cs b/Assets/Scripts/LevelMaster.cs
+index dfebd99..38f54a2 100644
+--- a/Assets/Scripts/LevelMaster.cs
++++ b/Assets/Scripts/LevelMaster.cs
+@@ -7,12 +7,15 @@ public class LevelMaster : MonoBehaviour {
+ 	public GameObject Spawn;
+     public Notes[] AvailableNotes;
+ 
++    public bool gameOver = false;
++    
+ 
+ 
+ 
+     // Use this for initialization
+     void Start ()
+ 	{
++        
+ 		Spawn = GameObject.Find("SpawnPoint_Parent");
+ 		startLevel ();
+ 	}
+@@ -61,5 +64,7 @@ public struct Notes
+     public int hitValue;
+     public int endValue;
+ 
++    //public RuntimeAnimatorController NoteAnimation;
++
+ 
+ }
+diff --git a/Assets/Scripts/Node.cs b/Assets/Scripts/Node.cs
+index 0ecc219..ec0047a 100644
+--- a/Assets/Scripts/Node.cs
++++ b/Assets/Scripts/Node.cs
+@@ -1,9 +1,9 @@
+ ﻿using UnityEngine;
++using System.IO;
+ using System.Collections;
+ 
+ public class Node : MonoBehaviour 
+ {
+-	public string type;
+ 
+     public Material material;
+ 
+@@ -12,6 +12,8 @@ public class Node : MonoBehaviour
+ 
+     private LevelMaster levelMaster;
+ 
++    //private RuntimeAnimatorController anim;
++
+     private Notes noteType;
+ 
+ 	//public GameObject paticleSystem;
+@@ -19,6 +21,10 @@ public class Node : MonoBehaviour
+ 	// Use this for initialization
+ 	void Start () 
+ 	{
++
++        //anim = noteType.NoteAnimation;
++        //gameObject.GetComponent<Animator>().runtimeAnimatorController = anim;
++
+         Renderer render = gameObject.GetComponent<Renderer>();
+         levelMaster = GameObject.Find("LevelMaster").GetComponent<LevelMaster>();
+         noteType = levelMaster.DetermineType();
+diff --git a/Assets/Scripts/SpawnScript.cs b/Assets/Scripts/SpawnScript.cs
+index e39ab96..4867078 100644
+--- a/Assets/Scripts/SpawnScript.cs
++++ b/Assets/Scripts/SpawnScript.cs
+@@ -8,19 +8,21 @@ public class SpawnScript : MonoBehaviour {
+ 
+ 	public bool GameStarted = false;
+ 
+-    public float delay;
++    public float spawnDelay;
++    private LevelMaster levelMaster;
+ 
+     void Start()
+     {
+-        float i = 2.0f;
+-        StartCoroutine(startSpawn(i));
+-        StartCoroutine(startNormalSpawn(i));
++        levelMaster = GameObject.Find("LevelMaster").GetComponent<LevelMaster>();
++
++        StartCoroutine(startSpawn());
++        
+     }
+ 
+ 	void Update()
+ 	{
+ 
+-        //SpawnNote();
++        
+ 
+ 	}
+     
+@@ -45,20 +47,23 @@ public class SpawnScript : MonoBehaviour {
+         }
+     }
+ 
+-    IEnumerator startSpawn(float waitTime)
++    IEnumerator startSpawn()
+     {
+-        waitTime = 1.0f;
+-        yield return new WaitForSeconds(waitTime);
+         SpawnNote();
+-        StartCoroutine(startSpawn(0));
++        yield return new WaitForSeconds(spawnDelay);
++
++        if (levelMaster.gameOver == false)
++        {
++            StartCoroutine(startSpawn());
++        }
+     }
+ 
+-    IEnumerator startNormalSpawn(float waitTime)
++    /*IEnumerator startNormalSpawn(float waitTime)
+     {
+         waitTime = 1.5f;
+         yield return new WaitForSeconds(waitTime);
+         SpawnNote();
+         StartCoroutine(startSpawn(0));
+-    }
++    }*/
+ 
+ }
+diff --git a/Assets/Scripts/UIScript.cs b/Assets/Scripts/UIScript.cs
+index 2a0db2d..9aff52c 100644
+--- a/Assets/Scripts/UIScript.cs
++++ b/Assets/Scripts/UIScript.cs
+@@ -7,6 +7,7 @@ public class UIScript : MonoBehaviour {
+     //UI Font and Font size
+     public Font newFont;
+     public int newFontSize;
++    public Color newColor;
+ 
+     //refernce to the Score Text 
+     public Text textToUpdate;
+@@ -18,6 +19,7 @@ public class UIScript : MonoBehaviour {
+     {
+ 
+         levelMaster = GameObject.Find("LevelMaster").GetComponent<LevelMaster>();
++        textToUpdate.color = newColor;
+         textToUpdate.font = newFont;
+         textToUpdate.fontSize = newFontSize;
+     }
+diff --git a/Assets/_Scenes/Backup(Don't touch)/Level_Template(duplicate it when making a new lvl).unity b/Assets/_Scenes/Backup(Don't touch)/Level_Template(duplicate it when making a new lvl).unity
+index c10d0aea4a3fe9ef1decc87b1f77b481608b69aa..59daf4a3fa74b5972a228e2327557e459f52237f 100644
+GIT binary patch
+delta 3070
+zcmZWrdr*|u6+hqZ@(?j#K-uh~enbe51mqD+Bq$;btR^TvP_#PsbNSfa0K3cX%4=d5
+z>$Jsa67+Ve#z#aaQ<Jd~yXiD(nun&%n6_zTTBoE=m9%NvP9MR)LZb=&oo_D`H+S}Y
+z_nhB3_uTuP$Nl!5{ibt6rnN+YEkuLoh$scTA2XE~l@yh>me5y|laop&fX~6C-FoxR
+zJI^*B7{2*iM`^*|TyK@Cn-Bi0?L_X#Q2sAIq3erb=f1f1oH;q@*Sfv6db`$36Ok{?
+zo#ul7V*Q1YO53JikJWoz<-RxE=a=O_m;6%Y{d-?Jn7VzIb&u<EDb|~ni|gu4ad}`L
+z6`k=l;mt(-HIPz4b`T}1q>zb*fIkk=0^$QIGw=q9FNnd{Nqk`pzFy*srg4Qfg5ORQ
+zrXnyZhz76;Hg<sxf|5a5AWCH1OgC_#`4IU)_k$FP7n!M_9YZ9JP!u;A_I;4qJ{uJE
+z6UDzH@f_?wtvC%whaf7T2SBu%`RIb<5ZO^K<Hp8O{6&f9#o!kto<9R;|8GEM{{@V*
+z|FGQPJ;=PlgRGdb!F7p0Gy@+Z>i>_#3#V~~9N6FvWR$`rM^#2tDS<r`<4XW54n9OQ
+zqB(Xf;*E=0VQg$B<g5Ql5T6taNfD>!K6tn+PRSNOD$fYl_}YB|3LsOvNTWKRH&m;I
+zH0szn%{DfM0+rb;u8^>tHhTK>DK^yG&ipDp7^?Gxz%_WhQs1EUNUplw<MMXsUe<5$
+zINh7{9yjw2U%=A`|62RHE<MoN?&}7)Sr3Ff&by!|JYIdHUvqlAE*M~Sh`vA={+zlf
+z{bwhSee~Y7!`Dwf9*Os_vNcz>{c!)=pZC_^zMN_1FrB-&w%!!EF)P_LUqQS$eJ^k@
+zKt^;|ix=h=h<lT}OI=!r&c~qJaD5@W^e?AR{qecppVm}8VmkBsljp<RGM!Jw?aT}Q
+zwfW~id5mi@z^;uZd>BnwAFc$(Nr*Ne@1YPkCK6>dCO6>B#zcY)``8BLreZ&_4cH{{
+z|2JT?!ErCKeJQD6q8+Z#R`5FL?got3`*Z_}L-84LM!U({sFmsV>fM}olCzOU@ORft
+zv_3c+D=38LCSQ}kMGNVX%#?^DADvFW37>hQ>G+y&9H`rz+wiu<H5=F?AdWr{@cnt>
+zvvrHbaFInx5qs~mD>-8Q(hQ|Y9I`9{f62o9#ih)DyfkAz=M42tNuX-@snNV$T2Q1E
+zmP9_>@=T(+mMF60n>C7ZR19eu%dQ|UjWFe=3CL{&mVa^p$Qnn)*Erwa0W>g=pwtbB
+zTbf-N6?1mkl^&75%f5gTqMoW@RSkb^-QxNvo99NM!EQk8!E;<3gY_`Z$Z7x5@NH%z
+zns6OA`hP-<z%Ebx8_#Aj%V}RQFpKCJSfm>i^?gTLTSc{#eeZDEn~D)X_Ik(gidVz<
+z-mBZnc<zC20CR>xQ6B?R$3?(Vn0fa7Qr9RxF#P|+X<s%DyH40~dKCGNzxN$9{JZBw
+zqs7e;AcPL%n$(So<t=t)rP$hH4_~<l#Rvx*px+>UJpI<ja<;#kLNtb%dpAJw4AB9p
+z8%{+$A@f^V<htXQ+ZAkMolCR_^UQOdkh-JL9fWSopvih8F(;)m?_PZNu!_H{0T}Q&
+zC3TK8qCCi4r#Iw=ZJ+&szoO(%6TfP)Rs0<$_`1=Au^a_}(IHJ7NLK85J?S@V*=9Ih
+zEYxkL;(4M%w^dx7_jSu}EuL4;mXD$mk71tqW?`utoiCn+mz5dfW!<J+5$jvi9{9G@
+zS*=75V_lX((QIExHm`w5jaKm$){R?*t<_f1eBamW;>Xf*47%95h)7+rO?X>vCbvyI
+z4KInf(_-ItNm&U8hy2jRR$j5xP1wZ^cyVNkFIsIo`f&rs<}u;TPQIpya0{NsG&BE+
+zQg<4<qtNl+s{pq@`o#ztrcZA#H$KCP&|N!~Igwww;+4wMLxX!G-+!h4@I5!Ty<GER
+zLbL&Uj+E(z`#z|9b<NppTi(riKZ<@j>dN@tBLC`v(j)G@m%i&1x7;NW)#ETFyteS#
+zrR7OSBEGgPlNjzyv~bOd!H(^b@s8019OF!N`YX9B#ns)P%;Ecp8sFt7Wr@z-G^mNV
+z4#kKkTMTw3o*nB_l-ZGwyUR>se7B`?j14fR3YqJW$5eez)$3F(bIWmX_`VgXp;`-f
+zhd96QA<^HKD0+e^;xW%`8&wfKf0;-_9eY88tFQzZRq;8jQys<i#)D^$Ae7d^_pdls
+zOc7Ck6-T)%m(7UK)zgFDHBV%<%?tNe?E|moZE|~pDt_H=J)o;0x2^`AK5#*|uREBZ
+zRJhf*TkX(#)ec{mu6jbM7F2ry`P+3Zs23*H`n<Uz)#=u}uITDke0x-1Kn>!LhRQyZ
+z>V0YmKX`6h-Jk_SdO&UUB?W+JA+@5g7B7$!jmU^c72~}YVeLDSfcuR4UoQ|t9p#bn
+vzClF{@3Wcwm&HndX5_V}QsayiKYz><`Ec)_OzF7cC~15uG(>+mTU_-&$h^{r
+
+delta 1349
+zcmZWoe{54#6h8O%Z7pnNb!%Do9z)0`=?qM_y2zU7x|BfKj4ogtAtdX<ezA6I*C7Lp
+z><ttl8)7(7Sp+OYlg31TJrbR9q>29^f^HfTAtsPu;u1+@iNg+X_1yQ~A9dX1<ZJKu
+zo$s7`?|I47Jaw4A3eYtN@J<Q<3IKLE2%)C3s<OJH3g$DJ43lXiO+SieCLX8W-!gpu
+z_K(5pXaDGQSO*I(%z7TKoh`c?*bI$jq}#65FWbPi4|yxIwzWrE_rRRSr9KO8vO8U8
+zn|Ga=U6wj=^}%V@F!s4rNeQ1)LJQY!75vTcv!^|{q;R0(5fwXEUVS%l>ekUcUj^!3
+z<YVJGn;MU{pL%P)`Hd-W%f0e%+?4B~+yKWbt32As(u+ZDG<3wq{94710AnNA(_LJf
+zk^q`WNrss?p;&S0&!qw#IRG(2amF|>u?77mr{YAn!Y1)%w^AF+1vo@pu^yR>&~5L$
+zSuQY5oba#L!{FLXE{JQw3R7`oSgD=10*sSJRAJN&0sPbX$!dW~8$gioU%d}5wjgbC
+z_wgiotibWGQrff#KqPF_!|-@y>QtN|odfL=QL!STlzQ?E*T=f6MVP{Sm$rHZ#;`S_
+z@N^#Ti^wd9qa;`J0osV7`=T(+e~FIh@@bqRMaT}Yj#%+Haa{*+!&D@3QIAsUSOV}a
+zDY6fF`10l&+JfU)-=hpBXuy7>e-CvJx_?^3rb4B`Ti8MPua5#kGfmu^gxSs!lM6j%
+zT*;j7N$)|c$K+DPWqD#_ubq1eaci&aOBMnoNE*?@IB?i`TbvMrMgL3FUu$2PYlGm<
+z7vb4nnKwD{D!F{^d~!C1Or_uT<ZSFWxer{pJSy`mF7!p^+Af;MtTy#}7xFC)qTVEN
+z3#ad*$!$RvEy6_9#*@YPMO60Pp&1>er0jdD^j3+90hPX(g+-n-xoJ1fQ#-K|lw-0l
+zRRZt=WvtZ0xSHIFzINe~Chl#*><U(s+bv^nOfGRN^xQ(KKL`yz&9|<{FJmn%U$gh+
+zvQ@i3_O`D%aDDxyhBG&szkB9;V?fspkME5_%`4i_{JEc3`>gm{yh__2U(fORy^`hn
+zwQJf>J6Ce__uEh!c%4wf)GnJA8kn@&Iy%PcsSx1W!QXNDK)KeX+8A4`^$mGBst2TF
+z2T!m(?c~89n0tmzy`1ljT~;l3Ub?4*>O>lV-;a|!-I!2qTH=r+N0gMj-hQ#WLi_c|
+Ux7<nJ2rRxYj&7_6o^5si0bt;4-T(jq
+
+diff --git a/Assets/_Scenes/Backup(Don't touch)/Level_Template(duplicate it when making a new lvl).unity.meta b/Assets/_Scenes/Backup(Don't touch)/Level_Template(duplicate it when making a new lvl).unity.meta
+index c8c2ba0..4bb3856 100644
+--- a/Assets/_Scenes/Backup(Don't touch)/Level_Template(duplicate it when making a new lvl).unity.meta	
++++ b/Assets/_Scenes/Backup(Don't touch)/Level_Template(duplicate it when making a new lvl).unity.meta	
+@@ -1,6 +1,6 @@
+ fileFormatVersion: 2
+ guid: 53b388f31a060584aa49e6ba07be99fc
+-timeCreated: 1440396494
++timeCreated: 1440412474
+ licenseType: Free
+ DefaultImporter:
+   userData: 
+diff --git a/Assets/_Scenes/Level_Template(duplicate it when making a new lvl).unity b/Assets/_Scenes/Level_Template(duplicate it when making a new lvl).unity
+index ef51950e17fcbb1403b3a0cbe5ed600027bca896..59daf4a3fa74b5972a228e2327557e459f52237f 100644
+GIT binary patch
+delta 929
+zcmZXSe@IhN6vxkfb85EfOvl#VmWo13;E!pP6<AG}29YM2N@2@}OZVe#QX&;<VmT;s
+zoqmesR)iW+$|FKZOD!-$F#4laghoH;k067<LSmigMu<K5o_p^(pL6a#_r72sHxS@d
+z0G|B--2(uSKy$&T%2JORQ!CGXYwTVBGLZH36TC~OpiT6xF>~T&&cdRb1WU8CSX_`b
+ztWpa*byeFM`@N4BTFi?RdRY#!17UVFLBVMlF!0Nut&jYSlud$C!13BF{E^sfthYF<
+zdyZQ@uow!3?q?W3`ft3w(DKk!w28Yp(r~x6MqhVQUYptUx$4n_tr?W-q2m2qYb8Ki
+z2`#As(32oGmFja4Ab&Y6qeuo4TjsBb_}8uQ?~C|TR`}^+mg=Pb^E0TXxmDU$L6bBR
+z#7d2EI31_Kp6K`(>9SaCxWOldavW6iDyOyC<g&Xw;DLHL3>I-xJ+fCkVS6TH0`9PD
+zSP-l2ykUDhK&O<xq)><k@Qzh%l*TFa*?IX4z0n*FQ^pWJrwnZ(z$uC@&*+U>+#+RM
+zL+0RFCK||=V4;II2uT3PR?znES4<N972QkRd9p(|NOZ0mz)unTlESBHOr9;KCCuOl
+z;x^+SvO!$yq_b-Px+p>eDNMJgtIZNUh2>73Y0*Kp4826pYXOc>M0%yD2tBNj?ULv!
+z94BrL-;>S7-%h^JrUST6k>y=x=jR=e=ve;$N;#33fV*8h`-MkcyrG1Ck^<tTCrgX$
+z7(MEyrvzxjfQ#qAfMYHl^Wz&=2UCg%g=m&+^mVt3m+qM_#?RK=G2M=l5senNR`n%V
+zuX&Xsly(`f+S<p@)S=g%FHX37l*%}%V%el*Ar13RCyDmf0>)O0fwm2DrVyt)Uobq>
+eq2q)J^n3N<%-NqY$x4Fb=B56^-|JhsMSlT>7wJX-
+
+delta 756
+zcmZ9KUr1AN6vxl+&donfXSI3FdzXq86V0q8=|G(*O)Q8qus~=deW;wfQz{K4O$tq7
+z$)TdM+|-~R(#EeyACgfLS_l;cB0+*L1wjfbk>xsf>p{HmJ?9?2pL5PVa32SRnSLP|
+zz}pMpn*jg=y+7+s&Nd~-UN!`mEx!wwv*ydI;ZPQtr+Jy|5cn;@#aJExqd6OI8m_r8
+zxGabI-mL^!)xe{eJi_`3J0<X0!xF=xbPFbJxtP5g4u?l}?3?#Lob|Q7EH6DE42<Or
+z4~Q=&+9c(^>urmu3#L=AE3yLDjLyVLDvy)&BpDatMP|mZLDX)inqeS42R$||I#MLw
+zoHBZh=bo9+FeffHh-?z$-I6&!3E-;AMidTHg6{F^0yU3fnOo9^=-Myna*NE5t<({>
+z8K8~a^&NdNt2VWx3xjTnrQ$TjLi|p&b1T644RpiL+vO@fgPDygS4`25CmSVmh6%t=
+zPD4b|uQ_M@T0td*u$MRsKBYK`Q$**Bw2>T2q$u5yWpb$WC^C=4;?PXdjzu2HJeLYk
+zM@~#cQ97vCRH<|&dWrjhHz;P{6OUAMA`Rd!IqR>?v+k``>0jh+oV4e^=fuA>;~Q>M
+zBy*t*u%GzMh@u;Hue|l@3<ZxWlCU6SqmssMVz<)C^gPk4W4l`JSnGFpP9J<;HTb#a
+z&CV%}ibF-u*d-4X9OfNsBcF0@v3R7(iuPt5ztVIs5lfnl+}@tgSOWKU<Y?I@{@~hs
+zCNHv&C3>qe-maM|{vkO_t=1m9?{#+BuwyZV%5|ChyOv^&>aUZqpdK21RxGup{{U)R
+B*M|TA
+
+-- 
+1.9.5.msysgit.0
+
