@@ -5,7 +5,11 @@ public class LevelMaster : MonoBehaviour {
 
 	public int LevelScore;
 	public GameObject Spawn;
+    public int health;
     public Notes[] AvailableNotes;
+    
+
+    
 
     public bool gameOver = false;
     
@@ -21,8 +25,9 @@ public class LevelMaster : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+    {
+	    
 	}
 
 	void startLevel()
@@ -45,9 +50,28 @@ public class LevelMaster : MonoBehaviour {
 
 
         returnNote = AvailableNotes[typeValue];
-
         return returnNote;
+     }
+
+    public void DH()
+    {
+        health -= 1;
+        Debug.Log("Health left:" + health);
+        if (health <= 0)
+        {
+            Debug.Log("Gameover");
+            gameOver = true;
+            GameOver();
+            
+        }
     }
+
+    private void GameOver()
+        {
+            Time.timeScale = 0;
+            
+        }
+
 
 }
 
@@ -63,6 +87,8 @@ public struct Notes
 
     public int hitValue;
     public int endValue;
+
+    public bool bad;
 
     //public RuntimeAnimatorController NoteAnimation;
 

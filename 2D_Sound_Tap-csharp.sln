@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{65454AA5-01E3-CAAB-37B1-7A67898E5A7D}") = "2D_Sound_Tap", "Assembly-CSharp.csproj", "{50289BBB-D916-5F5D-342E-BEBBA538639C}"
+Project("{65454AA5-01E3-CAAB-37B1-7A67898E5A7D}") = "2D_Sound_Tap", "Assembly-CSharp-vs.csproj", "{50289BBB-D916-5F5D-342E-BEBBA538639C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,7 +17,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																GlobalSection(MonoDevelopProperties) = preSolution
+																																	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
