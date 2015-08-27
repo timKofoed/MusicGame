@@ -55,7 +55,7 @@ public class LevelMaster : MonoBehaviour {
 
     public void DH()
     {
-        health -= 1;
+        /*health -= 1;
         Debug.Log("Health left:" + health);
         if (health <= 0)
         {
@@ -63,7 +63,7 @@ public class LevelMaster : MonoBehaviour {
             gameOver = true;
             GameOver();
             
-        }
+        }*/
     }
 
     private void GameOver()
