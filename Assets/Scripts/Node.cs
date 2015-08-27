@@ -12,6 +12,8 @@ public class Node : MonoBehaviour
 
     private LevelMaster levelMaster;
 
+    public bool bad;
+
     //private RuntimeAnimatorController anim;
 
     private Notes noteType;
@@ -31,6 +33,7 @@ public class Node : MonoBehaviour
         endValue = noteType.endValue;
         hitValue = noteType.hitValue;
         material = noteType.material;
+        bad = noteType.bad;
         render.material = material;
         render.material.color = noteType.colour;
         
@@ -55,8 +58,13 @@ public class Node : MonoBehaviour
 	public void OnMouseDown ()
 	{
         //Debug.Log ("Click, Nu skal der INSTANTIATES ET PARTICLE SYSTEM, og DENNE DESTROYED");
-        //If dette Gameobject.tag = Bonus, Tilføjes bonuspoint eller Liv eller power-up;
+
         //paticlesystem instantiates her
+
+        if (bad == false)
+        {
+            levelMaster.DH();
+        }
 
         levelMaster.AddScore(hitValue);
 		Instantiate (scoreSystem, gameObject.transform.position, Quaternion.identity);
