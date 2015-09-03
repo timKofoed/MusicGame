@@ -67,7 +67,7 @@ public class Node : MonoBehaviour
         }
 
         levelMaster.AddScore(hitValue);
-		//Instantiate (scoreSystem, gameObject.transform.position, Quaternion.identity);
+		Instantiate (scoreSystem, gameObject.transform.position, Quaternion.identity);
 		Destroy (this.gameObject.transform.root.gameObject);
 
 	}
