@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 475128}
   - 114: {fileID: 11424918}
   - 82: {fileID: 8234732}
+  - 114: {fileID: 11416116}
   m_Layer: 0
   m_Name: Scorestuff_NodeShoot
   m_TagString: Untagged
@@ -189,6 +190,18 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &11416116
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 149100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f626b5a1710bf4fb83b5daf9c0c794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textRenderer: {fileID: 2317176}
 --- !u!114 &11424918
 MonoBehaviour:
   m_ObjectHideFlags: 1

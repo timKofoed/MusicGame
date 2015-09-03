@@ -3,25 +3,25 @@ using System.Collections;
 
 public class LevelMaster : MonoBehaviour {
 
-	public int LevelScore;
+	public int levelScore;
 	public GameObject Spawn;
     public int health;
     public Notes[] AvailableNotes;
     
-
-    
+	private GameController gameController;
+	private AudioSource backgroundMusic;
+	private int maxHealth;
 
     public bool gameOver = false;
     
-
-
-
     // Use this for initialization
     void Start ()
 	{
-        
+		maxHealth = health;	//remember how much health we have in the beginning, so we can reset to that amount later   
 		Spawn = GameObject.Find("SpawnPoint_Parent");
-		startLevel ();
+		backgroundMusic = this.gameObject.GetComponent<AudioSource> ();
+		backgroundMusic.Stop ();	//make sure the music doesn't start on its own
+		//startLevel ();
 	}
 	
 	// Update is called once per frame
@@ -30,15 +30,28 @@ public class LevelMaster : MonoBehaviour {
 	    
 	}
 
-	void startLevel()
+	// Start the level and pass a reference to the gameController, so we have a reference to it
+	public void startLevel( GameController newGameController )
 	{
-	
-		Spawn.GetComponent<SpawnScript> ().GameStarted = true;
+		Debug.Log ("Starting level");
+		gameOver = false;
+		gameController = newGameController;
+		Spawn.GetComponent<SpawnScript> ().BeginSpawning ();
+		backgroundMusic.Play ();
+		health = maxHealth;	//reset the amount of health we have
+		levelScore = 0;
+	}
+
+	public void StopLevel()
+	{
+		Debug.Log ("Stopping level");
+		Spawn.GetComponent<SpawnScript> ().GameStarted = false;
+		backgroundMusic.Stop ();
 	}
 
     public void AddScore(int addedScore) 
     {
-        LevelScore += addedScore;
+        levelScore += addedScore;
         
     }
 
@@ -55,22 +68,29 @@ public class LevelMaster : MonoBehaviour {
 
     public void DH()
     {
-        /*health -= 1;
+		//If the game has already ended, then don't apply the lost health
+		if (gameOver)
+			return;
+
+        health -= 1;
         Debug.Log("Health left:" + health);
         if (health <= 0)
         {
             Debug.Log("Gameover");
             gameOver = true;
             GameOver();
-            
-        }*/
+
+        }
     }
 
     private void GameOver()
-        {
-            Time.timeScale = 0;
-            
-        }
+    {
+		health = maxHealth;
+		StopLevel ();
+		gameController.ResetLevel ();
+		gameController.SubmitScore (levelScore, "Player1");
+		levelScore = 0;
+    }
 
 
 }

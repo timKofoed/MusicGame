@@ -21,11 +21,13 @@ public class SpawnScript : MonoBehaviour {
 
 	void Update()
 	{
-
-        
-
 	}
     
+	public void BeginSpawning()
+	{
+		GameStarted = true;
+		StartCoroutine(startSpawn());
+	}
 
     void SpawnNote()
     {

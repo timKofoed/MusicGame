@@ -17,7 +17,6 @@ public class UIScript : MonoBehaviour {
 
     void Start()
     {
-
         levelMaster = GameObject.Find("LevelMaster").GetComponent<LevelMaster>();
         textToUpdate.color = newColor;
         textToUpdate.font = newFont;
@@ -27,7 +26,7 @@ public class UIScript : MonoBehaviour {
 	void Update ()
 	{
         //Updates the score on the canvas 
-        textToUpdate.text = levelMaster.LevelScore.ToString();
+        textToUpdate.text = levelMaster.levelScore.ToString();
 	}
 
 	void OnGUI()
