@@ -141,11 +141,11 @@ public class HighSoreScript : MonoBehaviour
 	//Når vi har en ny score, så skal vi hente alle de scores (og navne) fra harddisken, og sammenligne med vores nye score
 	public void UpdateScoreOnDisk(int myScore, string myName)
 	{
-		int[] oldScores = new int[10];
-		string[] oldNames = new string[10];
+		oldScores = new int[10];
+		oldNames = new string[10];
 
-		int[] newScores = new int[10];
-		string[] newNames = new string[10];
+		newScores = new int[10];
+		newNames = new string[10];
 
 		for (int i = 0; i < 10; i++) 
 		{

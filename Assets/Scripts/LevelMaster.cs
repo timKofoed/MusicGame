@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 
 public class LevelMaster : MonoBehaviour {
 
@@ -13,6 +14,9 @@ public class LevelMaster : MonoBehaviour {
 	private int maxHealth;
 
     public bool gameOver = false;
+    public float pitchOnSqueal;
+    public float pitchSquealSeconds;
+    public AudioMixer audioMixer;
     
     // Use this for initialization
     void Start ()
@@ -72,6 +76,8 @@ public class LevelMaster : MonoBehaviour {
 		if (gameOver)
 			return;
 
+        MusicSqueak();
+
         health -= 1;
         Debug.Log("Health left:" + health);
         if (health <= 0)
@@ -81,6 +87,18 @@ public class LevelMaster : MonoBehaviour {
             GameOver();
 
         }
+    }
+
+    public void MusicSqueak()
+    {
+        StartCoroutine("Squeak");
+    }
+
+    private IEnumerator Squeak()
+    {
+        audioMixer.SetFloat("pitch", pitchOnSqueal);
+        yield return new WaitForSeconds(pitchSquealSeconds);
+        audioMixer.SetFloat("pitch", 1.0f);
     }
 
     private void GameOver()

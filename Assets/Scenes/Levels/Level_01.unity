@@ -1569,7 +1569,8 @@ AudioSource:
   m_GameObject: {fileID: 894680712}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300001, guid: 145e371ce395d494d9d533977011a9d6,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 064c4c4cbedde2449bc56a5f4219aebd, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1644,7 +1645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelScore: 0
   Spawn: {fileID: 0}
-  health: 3
+  health: 10
   AvailableNotes:
   - type: 1
     material: {fileID: 2100000, guid: 720ad31c03175be4f9af702431bde799, type: 2}
@@ -1683,6 +1684,9 @@ MonoBehaviour:
     endValue: -15
     bad: 1
   gameOver: 0
+  pitchOnSqueal: 2
+  pitchSquealSeconds: .5
+  audioMixer: {fileID: 24100000, guid: 145e371ce395d494d9d533977011a9d6, type: 2}
 --- !u!4 &894680715
 Transform:
   m_ObjectHideFlags: 0
