@@ -155,100 +155,6 @@ public class HighSoreScript : MonoBehaviour
 			newNames[i] = oldNames[i];
 		}
 
-
-
-		//Først skal vi hente de gamle scores
-		/*int oldScore1 = PlayerPrefs.GetInt(highScoreOnDisk1);
-		int oldScore2 = PlayerPrefs.GetInt(highScoreOnDisk2);
-		int oldScore3 = PlayerPrefs.GetInt(highScoreOnDisk3);
-		int oldScore4 = PlayerPrefs.GetInt(highScoreOnDisk4);
-		int oldScore5 = PlayerPrefs.GetInt(highScoreOnDisk5);
-		int oldScore6 = PlayerPrefs.GetInt(highScoreOnDisk6);
-		int oldScore7 = PlayerPrefs.GetInt(highScoreOnDisk7);
-		int oldScore8 = PlayerPrefs.GetInt(highScoreOnDisk8);
-		int oldScore9 = PlayerPrefs.GetInt(highScoreOnDisk9);
-		int oldScore10 = PlayerPrefs.GetInt(highScoreOnDisk10);
-		
-		string oldName1 = PlayerPrefs.GetString(highScoreNameOnDisk1);
-		string oldName2 = PlayerPrefs.GetString(highScoreNameOnDisk2);
-		string oldName3 = PlayerPrefs.GetString(highScoreNameOnDisk3);
-		string oldName4 = PlayerPrefs.GetString(highScoreNameOnDisk4);
-		string oldName5 = PlayerPrefs.GetString(highScoreNameOnDisk5);
-		string oldName6 = PlayerPrefs.GetString(highScoreNameOnDisk6);
-		string oldName7 = PlayerPrefs.GetString(highScoreNameOnDisk7);
-		string oldName8 = PlayerPrefs.GetString(highScoreNameOnDisk8);
-		string oldName9 = PlayerPrefs.GetString(highScoreNameOnDisk9);
-		string oldName10 = PlayerPrefs.GetString(highScoreNameOnDisk10);
-
-		
-		//Vi gør klar til at sammenligne med vores nye score, og kopierer de gamle værdier i de nye felter
-		int newScore1 = oldScore1;
-		int newScore2 = oldScore2;
-		int newScore3 = oldScore3;
-		int newScore4 = oldScore4;
-		int newScore5 = oldScore5;
-		int newScore6 = oldScore6;
-		int newScore7 = oldScore7;
-		int newScore8 = oldScore8;
-		int newScore9 = oldScore9;
-		int newScore10 = oldScore10;
-		
-		string newName1 = oldName1;
-		string newName2 = oldName2;
-		string newName3 = oldName3;
-		string newName4 = oldName4;
-		string newName5 = oldName5;
-		string newName6 = oldName6;
-		string newName7 = oldName7;
-		string newName8 = oldName8;
-		string newName9 = oldName9;
-		string newName10 = oldName10;*/
-
-		
-		//Når vi sammenligner værdierne, er det vigtigt vi starter fra bunden
-		/*
-		//Hvis vi har slået scoren, så skal den rykkes ned, og vi sætter vores ind på dens plads
-		if(myScore > oldScore3)    
-		{
-			//Vi har slået denne værdi, og der er ikke flere værdier, så vi glemmer den gamle værdi
-			//Indsæt vores navn og score på placeringen
-			newScore3 = myScore;
-			newName3 = myName;
-			
-			//Se om vi OGSÅ har slået den næste i rækken
-			if (myScore > oldScore2)
-			{
-				//Vi har slået denne værdi, så FØRST skub dens værdier til den næste score før vi sætter vores værdier ind
-				newScore3 = oldScore2;
-				newName3 = oldName2;
-				
-				//Indsæt vores navn og score
-				newScore2 = myScore;
-				newName2 = myName;
-				
-				//Se om vi OGSÅ har slået den næste i rækken
-				if (myScore > oldScore1)
-				{
-					//Vi har slået denne værdi, så FØRST skub dens værdier til den næste score før vi sætter vores værdier ind
-					newScore2 = oldScore1;
-					newName2 = oldName1;
-					
-					//Indsæt vores navn og score
-					newScore1 = myScore;
-					newName1 = myName;
-				}
-			}
-		}*/
-		
-		//Gem de nye scores til harddisken
-		/*PlayerPrefs.SetInt(highScoreOnDisk1, newScore1);
-		PlayerPrefs.SetInt(highScoreOnDisk2, newScore2);
-		PlayerPrefs.SetInt(highScoreOnDisk3, newScore3);
-		
-		PlayerPrefs.SetString(highScoreNameOnDisk1, newName1);
-		PlayerPrefs.SetString(highScoreNameOnDisk2, newName2);
-		PlayerPrefs.SetString(highScoreNameOnDisk3, newName3);*/
-
 		for (int i = 7; i >= 0; i--) 
 		{
 			//Both check the score, and if we did NOT beat the score, then stop checking. If we DID beat the score, then keep going down the list
@@ -257,26 +163,34 @@ public class HighSoreScript : MonoBehaviour
 				break;
 		}
 
+		//update the scores in the visual Text fields on screen first, because it's faster to do
 		UpdateScoreTextFields ();
+		
+		//save the new scores to disk
+		for (int i = 0; i < 7; i++)
+		{
+			PlayerPrefs.SetInt(highScoresOnDisk[i], newScores[i]);
+			PlayerPrefs.SetString(highScoreNamesOnDisk[i], newNames[i]);
+		}
 	}
 
 	public bool didWeBeatTheScore(int scoreIndexToCheck, int newScore)
 	{
-		Debug.Log ("newScore("+newScore+") scoreIndexToCheck("+scoreIndexToCheck+")");
+		Debug.Log ("newScore("+newScore+") scoreIndexToCheck("+scoreIndexToCheck+") ScoreOnDisk ("+newScores [scoreIndexToCheck]+")");
 		//Se om vi OGSÅ har slået den næste i rækken
-		if (newScore > oldScores [scoreIndexToCheck]) 
+		if (newScore > newScores [scoreIndexToCheck]) 
 		{
 			//Vi har slået denne værdi, så FØRST skub dens værdier til den næste score før vi sætter vores værdier ind
-			newScores [scoreIndexToCheck + 1] = oldScores [scoreIndexToCheck];
-			newNames [scoreIndexToCheck + 1] = oldNames [scoreIndexToCheck];
-			//newScore2 = oldScore1;
-			//newName2 = oldName1;
-			
+			if (scoreIndexToCheck -1 >= 0)	//Er der en score under den vi lige har slået? Hvis ja, så skub nuværende score ét felt ned
+			{
+				newScores [scoreIndexToCheck - 1] = newScores [scoreIndexToCheck];
+				newNames [scoreIndexToCheck - 1] = newNames [scoreIndexToCheck];
+			}
+
 			//Indsæt vores navn og score
 			newScores [scoreIndexToCheck] = newScore;
 			newNames [scoreIndexToCheck] = "PlayerX";
-			//newScore1 = myScore;
-			//newName1 = myName;
+
 			return true;
 		} 
 		else 
@@ -293,4 +207,6 @@ public class HighSoreScript : MonoBehaviour
 			scoreFields[i].setScoreAndName( PlayerPrefs.GetInt("Score_"+(i+1)+"_Points") , "Score_"+(i+1)+"_Name");
 		}
 	}
+	
+	
 }
