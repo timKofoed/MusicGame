@@ -128,6 +128,8 @@ public struct Notes
 
     public bool bad;
 
+    public GameObject scoreSystem;
+
     //public RuntimeAnimatorController NoteAnimation;
 
 

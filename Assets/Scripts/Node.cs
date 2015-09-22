@@ -36,6 +36,7 @@ public class Node : MonoBehaviour
         hitValue = noteType.hitValue;
         material = noteType.material;
         bad = noteType.bad;
+        scoreSystem = noteType.scoreSystem; 
         render.material = material;
         render.material.color = noteType.colour;
         
@@ -80,7 +81,7 @@ public class Node : MonoBehaviour
 		Debug.Log ("newScoreObject.GetComponent<NodeContent>().name: " + newScoreObject.GetComponent<NodeContent>().name);
 		int index = Mathf.Abs (hitValue / 5) - 1;
 		Debug.Log ("index: " + index);
-		newScoreObject.GetComponent<NodeContent>().SetPointImage( pointImages [index] );
+		//newScoreObject.GetComponent<NodeContent>().SetPointImage( pointImages [index] );
 		//newScoreObject.GetComponentInChildren<Renderer> ().material.mainTexture = pointImages [Mathf.Abs (hitValue / 5) - 1];	//i det nye objekt, ændrer vi billedet afhængigt af hvor mange point der gives
 		Destroy (this.gameObject.transform.root.gameObject);
 
