@@ -1651,43 +1651,43 @@ MonoBehaviour:
   - type: 1
     material: {fileID: 2100000, guid: 720ad31c03175be4f9af702431bde799, type: 2}
     colour: {r: 0, g: 1, b: .00784313772, a: 1}
-    hitValue: -10
-    endValue: 10
+    hitValue: -5
+    endValue: 5
     bad: 0
     scoreSystem: {fileID: 152182, guid: 3cf53950e41145847a719fe8519b8228, type: 2}
   - type: 2
     material: {fileID: 2100000, guid: 79eb5beaca0524f4e89e205d88b0b23b, type: 2}
     colour: {r: 0, g: 1, b: .00784313772, a: 1}
-    hitValue: -10
-    endValue: 10
+    hitValue: -5
+    endValue: 5
     bad: 0
     scoreSystem: {fileID: 152182, guid: 3cf53950e41145847a719fe8519b8228, type: 2}
   - type: 3
     material: {fileID: 2100000, guid: a289b4928e59d1446957e136ec785355, type: 2}
     colour: {r: .944827557, g: 1, b: 0, a: 1}
-    hitValue: 20
-    endValue: 0
+    hitValue: 5
+    endValue: -5
     bad: 1
     scoreSystem: {fileID: 199658, guid: ae3cfb90eb7b06846b4d58fe0875d4a5, type: 2}
   - type: 3
     material: {fileID: 2100000, guid: 65da8eb69be342a41a6358668e6cdc28, type: 2}
     colour: {r: 1, g: 0, b: 0, a: 1}
-    hitValue: 15
-    endValue: -15
+    hitValue: 5
+    endValue: -5
     bad: 1
     scoreSystem: {fileID: 199658, guid: ae3cfb90eb7b06846b4d58fe0875d4a5, type: 2}
   - type: 3
     material: {fileID: 2100000, guid: 87b753603e2d8de4b83c5c48f39c0c4e, type: 2}
     colour: {r: .945098042, g: 1, b: 0, a: 1}
-    hitValue: 20
-    endValue: 0
+    hitValue: 5
+    endValue: -5
     bad: 1
     scoreSystem: {fileID: 199658, guid: ae3cfb90eb7b06846b4d58fe0875d4a5, type: 2}
   - type: 3
     material: {fileID: 2100000, guid: 118789227edec9c44bda2395074a2a3f, type: 2}
     colour: {r: 1, g: 0, b: 0, a: 1}
-    hitValue: 15
-    endValue: -15
+    hitValue: 5
+    endValue: -5
     bad: 1
     scoreSystem: {fileID: 199658, guid: ae3cfb90eb7b06846b4d58fe0875d4a5, type: 2}
   gameOver: 0
