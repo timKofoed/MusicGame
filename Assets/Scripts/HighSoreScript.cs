@@ -51,7 +51,7 @@ public class HighSoreScript : MonoBehaviour
 		//Først skal vi sørge for at vores "keys" findes, og at vi kan hente fra dem
 		if( !PlayerPrefs.HasKey(highScoreOnDisk1) )        //Hvis der ikke er en "key" med dette navn, så lav en ny tom key med det navn
 			PlayerPrefs.SetInt(highScoreOnDisk1, 0);
-		highScoresOnDisk [0] = highScoreNameOnDisk1;
+		highScoresOnDisk [0] = highScoreOnDisk1;
 		
 		if( !PlayerPrefs.HasKey(highScoreNameOnDisk1) )    
 			PlayerPrefs.SetString(highScoreNameOnDisk1, "N/A");
@@ -155,36 +155,38 @@ public class HighSoreScript : MonoBehaviour
 			newNames[i] = oldNames[i];
 		}
 
-		for (int i = 7; i >= 0; i--) 
+		// 0 is HIGHEST score, so we start looking at the LOWEST score first. If we beat it, then we move up the line.
+		for (int i = scoreFields.Length-1; i >= 0; i--) 
 		{
 			//Both check the score, and if we did NOT beat the score, then stop checking. If we DID beat the score, then keep going down the list
 			//NOTE: the array is backwards, so index 0 is the score at the top of the list, and the index at .length-1 is the last one on the highscore
 			if( !didWeBeatTheScore(i, myScore))
 				break;
 		}
-
-		//update the scores in the visual Text fields on screen first, because it's faster to do
-		UpdateScoreTextFields ();
 		
 		//save the new scores to disk
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < scoreFields.Length; i++)
 		{
 			PlayerPrefs.SetInt(highScoresOnDisk[i], newScores[i]);
 			PlayerPrefs.SetString(highScoreNamesOnDisk[i], newNames[i]);
 		}
+
+		//update the scores in the visual Text fields on screen first, because it's faster to do
+		UpdateScoreTextFields ();
 	}
 
 	public bool didWeBeatTheScore(int scoreIndexToCheck, int newScore)
 	{
 		Debug.Log ("newScore("+newScore+") scoreIndexToCheck("+scoreIndexToCheck+") ScoreOnDisk ("+newScores [scoreIndexToCheck]+")");
-		//Se om vi OGSÅ har slået den næste i rækken
+
+		//Se om vi har slået den scoren på denne plads
 		if (newScore > newScores [scoreIndexToCheck]) 
 		{
 			//Vi har slået denne værdi, så FØRST skub dens værdier til den næste score før vi sætter vores værdier ind
-			if (scoreIndexToCheck -1 >= 0)	//Er der en score under den vi lige har slået? Hvis ja, så skub nuværende score ét felt ned
+			if (scoreIndexToCheck +1 < scoreFields.Length)	//Er der en score under den vi lige har slået? Hvis ja, så skub nuværende score ét felt ned
 			{
-				newScores [scoreIndexToCheck - 1] = newScores [scoreIndexToCheck];
-				newNames [scoreIndexToCheck - 1] = newNames [scoreIndexToCheck];
+				newScores [scoreIndexToCheck + 1] = newScores [scoreIndexToCheck];
+				newNames [scoreIndexToCheck + 1] = newNames [scoreIndexToCheck];
 			}
 
 			//Indsæt vores navn og score
@@ -204,7 +206,8 @@ public class HighSoreScript : MonoBehaviour
 	{
 		for (int i = 0; i < scoreFields.Length; i++) 
 		{
-			scoreFields[i].setScoreAndName( PlayerPrefs.GetInt("Score_"+(i+1)+"_Points") , "Score_"+(i+1)+"_Name");
+			// highScoresOnDisk[i]
+			scoreFields[i].setScoreAndName( PlayerPrefs.GetInt(highScoresOnDisk[i]) , PlayerPrefs.GetString(highScoreNamesOnDisk[i]));
 		}
 	}
 	
