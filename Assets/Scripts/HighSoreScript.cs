@@ -171,7 +171,7 @@ public class HighSoreScript : MonoBehaviour
 			PlayerPrefs.SetString(highScoreNamesOnDisk[i], newNames[i]);
 		}
 
-		//update the scores in the visual Text fields on screen first, because it's faster to do
+		//update the scores in the visual Text fields on screen
 		UpdateScoreTextFields ();
 	}
 
@@ -179,7 +179,7 @@ public class HighSoreScript : MonoBehaviour
 	{
 		Debug.Log ("newScore("+newScore+") scoreIndexToCheck("+scoreIndexToCheck+") ScoreOnDisk ("+newScores [scoreIndexToCheck]+")");
 
-		//Se om vi har slået den scoren på denne plads
+		//Se om vi har slået scoren på denne plads
 		if (newScore > newScores [scoreIndexToCheck]) 
 		{
 			//Vi har slået denne værdi, så FØRST skub dens værdier til den næste score før vi sætter vores værdier ind
@@ -199,7 +199,6 @@ public class HighSoreScript : MonoBehaviour
 		{
 			return false;
 		}
-
 	}
 
 	public void UpdateScoreTextFields()
