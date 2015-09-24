@@ -1447,6 +1447,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  goodScorePartcle: {fileID: 160426, guid: a9a9f321bf3807a4f984906157e135e2, type: 2}
+  badScorePartcle: {fileID: 160426, guid: eda08b565f69f2f4aac571956b2946f5, type: 2}
 --- !u!23 &861582471
 MeshRenderer:
   m_ObjectHideFlags: 0
