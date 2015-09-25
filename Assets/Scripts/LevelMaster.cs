@@ -8,6 +8,8 @@ public class LevelMaster : MonoBehaviour {
 	public GameObject Spawn;
     public int health;
     public Notes[] AvailableNotes;
+    public GameObject lifeIcon;
+    public GameObject[] lifeArray;
     
 	private GameController gameController;
 	private AudioSource backgroundMusic;
@@ -22,6 +24,8 @@ public class LevelMaster : MonoBehaviour {
     void Start ()
 	{
 		maxHealth = health;	//remember how much health we have in the beginning, so we can reset to that amount later   
+        
+
 		Spawn = GameObject.Find("SpawnPoint_Parent");
 		backgroundMusic = this.gameObject.GetComponent<AudioSource> ();
 		backgroundMusic.Stop ();	//make sure the music doesn't start on its own
@@ -44,7 +48,14 @@ public class LevelMaster : MonoBehaviour {
 		backgroundMusic.Play ();
 		health = maxHealth;	//reset the amount of health we have
 		levelScore = 0;
-	}
+
+        lifeArray = new GameObject[health];
+
+        for (int i = 0; i > health; i++)
+        {
+            lifeArray[i] = Instantiate(lifeIcon, new Vector3(24.0f - (i * 2), 13.0f, -6), Quaternion.identity) as GameObject;
+        }
+    }
 
 	public void StopLevel()
 	{
