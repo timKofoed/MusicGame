@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 // This controller should handle (re)starting the level, selecting level, displaying the highscore, etc.
 public class GameController : MonoBehaviour {
@@ -16,6 +17,7 @@ public class GameController : MonoBehaviour {
 
 	private float delay = 2.0f;
 	private bool isBlocked = false;	//prevent the level from starting
+    public InputField nameInputField;
 
 	// Use this for initialization
 	void Start () 
@@ -35,6 +37,11 @@ public class GameController : MonoBehaviour {
 			levelMaster.startLevel(this);		
 		}
 	}
+
+    public void NameChanged(InputField inputField)
+    {
+        Debug.Log("new name: " + inputField.text);
+    }
 
 	//Reset the level and optionally delay the ability to start the level. If you don't pass a parameter, then it will be "true".
 	public void ResetLevel(bool shouldDelay = true)
