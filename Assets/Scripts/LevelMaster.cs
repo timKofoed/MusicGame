@@ -122,7 +122,8 @@ public struct Notes
     public Material material;
 
     public Color colour;
-
+    
+    public int health;
     public int hitValue;
     public int endValue;
 
