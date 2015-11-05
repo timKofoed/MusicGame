@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (!isBlocked && isWaitingForKeypress && Input.anyKeyDown) 
+		if (!isBlocked && isWaitingForKeypress && Input.anyKeyDown && !highScoreScript.isNameTypingInProgress()) 
 		{
 			isWaitingForKeypress = false;
 			gameUI.SetActive (true);		//Show the gameUI (score)
@@ -38,11 +38,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-    public void NameChanged(InputField inputField)
-    {
-        Debug.Log("new name: " + inputField.text);
-    }
-
+    
 	//Reset the level and optionally delay the ability to start the level. If you don't pass a parameter, then it will be "true".
 	public void ResetLevel(bool shouldDelay = true)
 	{

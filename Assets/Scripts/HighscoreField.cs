@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class HighscoreField : MonoBehaviour {
 
+    public int highscoreIndex;
 	public Text scoreBack;
 	public Text scoreFront;
 	public Text scoreNameBack;

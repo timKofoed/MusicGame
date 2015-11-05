@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class HighSoreScript : MonoBehaviour 
 {
@@ -41,8 +42,10 @@ public class HighSoreScript : MonoBehaviour
 
 	//I'm placing the strings into arrays so it will be easier to programmatically iterate through all of them
 	private string[] highScoreNamesOnDisk;	//An array of the strings we defined above to find the highscore names on disk
-	private string[] highScoresOnDisk;			//An array of the strings we defined above to find the highscore scores on disk
-		
+	private string[] highScoresOnDisk;          //An array of the strings we defined above to find the highscore scores on disk
+
+    public InputField inputNameFromUser;    // The InputField in which the user will give his name, when we´ve beaten a score
+
 	void Start () 
 	{
 		highScoreNamesOnDisk = new string[10];
@@ -138,8 +141,19 @@ public class HighSoreScript : MonoBehaviour
 	int[] newScores;
 	string[] newNames;
 
-	//Når vi har en ny score, så skal vi hente alle de scores (og navne) fra harddisken, og sammenligne med vores nye score
-	public void UpdateScoreOnDisk(int myScore, string myName)
+    private HighscoreField scoreFieldToUpdate;
+
+    /// <summary>
+    /// If we have a score field active, then we´re giving it a name
+    /// </summary>
+    /// <returns></returns>
+    public bool isNameTypingInProgress()
+    {
+        return (scoreFieldToUpdate != null);
+    }
+
+    //Når vi har en ny score, så skal vi hente alle de scores (og navne) fra harddisken, og sammenligne med vores nye score
+    public void UpdateScoreOnDisk(int myScore, string myName)
 	{
 		oldScores = new int[10];
 		oldNames = new string[10];
@@ -147,6 +161,8 @@ public class HighSoreScript : MonoBehaviour
 		newScores = new int[10];
 		newNames = new string[10];
 
+        int scoreFieldIndexWeBeat = -1;
+        
 		for (int i = 0; i < 10; i++) 
 		{
 			oldScores[i] = PlayerPrefs.GetInt(highScoresOnDisk[i]);
@@ -160,19 +176,42 @@ public class HighSoreScript : MonoBehaviour
 			//Both check the score, and if we did NOT beat the score, then stop checking. If we DID beat the score, then keep going down the list
 			//NOTE: the array is backwards, so index 0 is the score at the top of the list, and the index at .length-1 is the last one on the highscore
 			if( !didWeBeatTheScore(i, myScore))
-				break;
-		}
+                break;
+            else
+                scoreFieldIndexWeBeat = i;
+        }
 
-		//update the scores in the visual Text fields on screen first, because it's faster to do
-		UpdateScoreTextFields ();
-		
-		//save the new scores to disk
-		for (int i = 0; i < 7; i++)
-		{
-			PlayerPrefs.SetInt(highScoresOnDisk[i], newScores[i]);
-			PlayerPrefs.SetString(highScoreNamesOnDisk[i], newNames[i]);
-		}
-	}
+        //Remember which highscore place we beat, so we can ask the user for his name
+        if (scoreFieldIndexWeBeat != -1)
+        {
+            scoreFieldToUpdate = scoreFields[scoreFieldIndexWeBeat];    //and I need to keep the index for the newNames[] to store the name on disk
+            scoreFieldToUpdate.highscoreIndex = scoreFieldIndexWeBeat; //saving the index to the field´s tag
+            Debug.Log("We beat the score. Now give me your name!");
+        }
+        else
+            SaveHighscoreToDisk();  //we didn´t 
+
+    }
+
+    private void SaveHighscoreToDisk(string nameToSave = "", int nameIndex = -1)
+    {
+        if (nameIndex >= 0)
+        {
+            // Save the newly made name to disk at the correct index
+            PlayerPrefs.SetString(highScoreNamesOnDisk[nameIndex], nameToSave);
+        }
+        
+
+        //update the scores in the visual Text fields on screen first, because it's faster to do
+        //UpdateScoreTextFields();    //should be superfluous at this point, but just in case...
+
+        //save the new scores to disk
+        for (int i = 0; i < 7; i++)
+        {
+            PlayerPrefs.SetInt(highScoresOnDisk[i], newScores[i]);
+            PlayerPrefs.SetString(highScoreNamesOnDisk[i], newNames[i]);
+        }
+    }
 
 	public bool didWeBeatTheScore(int scoreIndexToCheck, int newScore)
 	{
@@ -207,6 +246,56 @@ public class HighSoreScript : MonoBehaviour
 			scoreFields[i].setScoreAndName( PlayerPrefs.GetInt("Score_"+(i+1)+"_Points") , "Score_"+(i+1)+"_Name");
 		}
 	}
-	
+
+    void Update()
+    {
+        // We have a field ready, so we need to show the InputField
+        if (scoreFieldToUpdate != null)
+        {
+            // If we haven´t enabled the user-input field yet, so we need to activate it
+            if (inputNameFromUser != null && (!inputNameFromUser.enabled || !inputNameFromUser.gameObject.activeSelf))
+            {
+                inputNameFromUser.gameObject.SetActive(true);
+                inputNameFromUser.enabled = true;
+            }
+        }
+        else if (inputNameFromUser != null && scoreFieldToUpdate == null && inputNameFromUser.gameObject.activeSelf)
+        {
+            // If we don´t have a score to update, but the InputField is active, then we need to hide the field
+            inputNameFromUser.gameObject.SetActive(false);
+        }
+
+    }
+
+    /// <summary>
+    /// Update the name while we´re typing into the field
+    /// </summary>
+    /// <param name="otherField"></param>
+    public void UpdateNameFromUser(InputField otherField)
+    {
+        // We have a field ready, so we need to update that field based on what has been typed
+        if (scoreFieldToUpdate != null)
+        {
+            scoreFieldToUpdate.scoreNameFront.text = otherField.text;
+        }
+    }
+
+    /// <summary>
+    /// Disable the input field when we´re done typing the name AND save the name to disk
+    /// </summary>
+    /// <param name="otherField"></param>
+    public void RemoveInputField(InputField otherField)
+    {
+        // Save the newly made name to disk at the correct index with the rest of the updated scores
+        SaveHighscoreToDisk(scoreFieldToUpdate.scoreNameFront.text, scoreFieldToUpdate.highscoreIndex);
+        //PlayerPrefs.SetString(highScoreNamesOnDisk[scoreFieldToUpdate.highscoreIndex], scoreFieldToUpdate.scoreNameFront.text);
+
+        UpdateScoreTextFields();
+
+        scoreFieldToUpdate = null;
+
+        // Disable the inputField
+        otherField.gameObject.SetActive(false);
+    }
 	
 }

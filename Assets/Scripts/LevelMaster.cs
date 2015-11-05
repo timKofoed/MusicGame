@@ -106,7 +106,7 @@ public class LevelMaster : MonoBehaviour {
 		health = maxHealth;
 		StopLevel ();
 		gameController.ResetLevel ();
-		gameController.SubmitScore (levelScore, "Player1");
+		gameController.SubmitScore (levelScore, "");    //first, we need to check to see if made the highscore
 		levelScore = 0;
     }
 
