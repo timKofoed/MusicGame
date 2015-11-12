@@ -38,7 +38,7 @@ public class EndZone : MonoBehaviour {
             Instantiate(goodScorePartcle, other.gameObject.transform.position, Quaternion.identity);
         }
 
-
+        levelMaster.RemoveNode(other.GetComponent<Node>());
         Destroy(other.gameObject.transform.root.gameObject);
 
 	}
