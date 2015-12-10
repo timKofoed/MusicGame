@@ -1240,7 +1240,7 @@ Prefab:
     - target: {fileID: 11408870, guid: 6f464db0a0629b44ea27fc55f0147f49, type: 2}
       propertyPath: material
       value: 
-      objectReference: {fileID: 2100000, guid: e2627a52834671949be550b16bd19ff8, type: 2}
+      objectReference: {fileID: 2100000, guid: 74a5b7cd8c1749542ad6aa417e6d61f4, type: 2}
     - target: {fileID: 2340458, guid: 6f464db0a0629b44ea27fc55f0147f49, type: 2}
       propertyPath: m_Enabled
       value: 1
@@ -1248,7 +1248,7 @@ Prefab:
     - target: {fileID: 2340458, guid: 6f464db0a0629b44ea27fc55f0147f49, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e2627a52834671949be550b16bd19ff8, type: 2}
+      objectReference: {fileID: 2100000, guid: 74a5b7cd8c1749542ad6aa417e6d61f4, type: 2}
     - target: {fileID: 466060, guid: 6f464db0a0629b44ea27fc55f0147f49, type: 2}
       propertyPath: m_LocalPosition.x
       value: 136
@@ -5486,7 +5486,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11415276, guid: 47195bb317ffc304ca07357c7671ce4e, type: 2}
       propertyPath: m_Text
-      value: This is a reall long name
+      value: This is a really long name
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 47195bb317ffc304ca07357c7671ce4e, type: 2}

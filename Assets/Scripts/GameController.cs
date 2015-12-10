@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour {
 	private HighSoreScript highScoreScript;
 	public BlinkingStartText blinkingStartText;
 
-	private bool isWaitingForKeypress = true;
+	private int isWaitingForKeypress = 1;
 
 	private float delay = 2.0f;
 	private bool isBlocked = false;	//prevent the level from starting
@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+        //PlayerPrefs.DeleteAll();
 		ResetLevel (false);
 		highScoreScript = this.gameObject.GetComponent<HighSoreScript> ();
         
@@ -32,12 +33,21 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (!isBlocked && isWaitingForKeypress && Input.anyKeyDown && !highScoreScript.isNameTypingInProgress()) 
+		if (!isBlocked && (isWaitingForKeypress > 0) && Input.anyKeyDown && !highScoreScript.isNameTypingInProgress()) 
 		{
-			isWaitingForKeypress = false;
-			gameUI.SetActive (true);		//Show the gameUI (score)
-			mainScreen.SetActive (false);	//Hide the main screen (PressKeyToStart / Highscore?)
-			levelMaster.startLevel(this);		
+            Debug.Log("KeyPressed FROM ("+ isWaitingForKeypress + ")");
+            if (--isWaitingForKeypress > 0)
+            {
+                mainScreenController.SetUIState(MainScreenController.UIState.Highscore);
+            }
+            else if(isWaitingForKeypress == 0)
+            {
+                mainScreenController.SetUIState(MainScreenController.UIState.Playing);
+                gameUI.SetActive(true);     //Show the gameUI (score)
+                mainScreen.SetActive(false);    //Hide the main screen (PressKeyToStart / Highscore?)
+                levelMaster.startLevel(this);
+            }
+					
 		}
 	}
 
@@ -45,18 +55,23 @@ public class GameController : MonoBehaviour {
     {
         mainScreenController.SetUIState(newUIState);
     }
-    
+
+    public void AddKeyPress()
+    {
+        isWaitingForKeypress++;
+    }
+
 	//Reset the level and optionally delay the ability to start the level. If you don't pass a parameter, then it will be "true".
 	public void ResetLevel(bool shouldDelay = true)
 	{
 		Debug.Log ("ResetLevel");
-		isWaitingForKeypress = true;
+        if(isWaitingForKeypress == 0)
+		    isWaitingForKeypress = 1;
 		gameUI.SetActive (false);		//Hide the gameUI (score)
 		mainScreen.SetActive (true);    //Show the main screen (PressKeyToStart / Highscore?)
         mainScreenController.SetUIState(MainScreenController.UIState.PressToStart);
 
         //blinkingStartText.Blink (5.0f, 5.0f);
-
 
 		if(shouldDelay)
 			StartCoroutine (PreventLevelStart());

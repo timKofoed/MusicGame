@@ -206,30 +206,36 @@ public class HighSoreScript : MonoBehaviour
         bool nameSaved = false;
         bool scoreSaved = false;
 
+        string debugString = "";
+
         if (nameIndex >= 0 && nameToSave != "")
         {
             // Save the newly made name to disk at the correct index
             PlayerPrefs.SetString(highScoreNamesOnDisk[nameIndex], nameToSave);
+            newNames[nameIndex] = nameToSave;
             nameSaved = true;
         }
 
         if (nameIndex >= 0 && scoreToSave >= 0)
         {
             PlayerPrefs.SetInt(highScoresOnDisk[nameIndex], scoreToSave);
+            newScores[nameIndex] = scoreToSave;
             scoreSaved = true;
         }
 
+        Debug.Log("saving ("+nameToSave+")("+scoreToSave+")");
 
         //save the new scores to disk
         for (int i = 0; i < scoreFields.Length; i++)
         {
-            if(!scoreSaved)
+            debugString += "("+i+") ("+newNames[i]+") ("+newScores[i]+")\n";
+            //if(scoreSaved)
                 PlayerPrefs.SetInt(highScoresOnDisk[i], newScores[i]);
 
-            if (!nameSaved)
+            //if (nameSaved)
                 PlayerPrefs.SetString(highScoreNamesOnDisk[i], newNames[i]);
         }
-
+        Debug.Log(debugString);
         //update the scores in the visual Text fields on screen first, because it's faster to do
         UpdateScoreTextFields();
 
