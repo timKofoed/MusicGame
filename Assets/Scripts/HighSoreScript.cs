@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class HighSoreScript : MonoBehaviour 
 {
+    private GameController gameController;
+
 	// Når man gemmer ting på harddisken via PlayerPrefs, så gemmer man ting i et "dictionary", som har en "key" og en "value"
 	// En "key" er altid en string, som du kan se som et slags variabel-navn
 	// En "value" er det som den indeholder (integer, float eller string)
@@ -48,7 +50,10 @@ public class HighSoreScript : MonoBehaviour
 
 	void Start () 
 	{
-		highScoreNamesOnDisk = new string[10];
+        // Find the GameObject in the scene, and then get the component, which is the script we made (GameController)
+        gameController = (GameObject.FindGameObjectWithTag("controller") as GameObject).GetComponent<GameController>();
+
+        highScoreNamesOnDisk = new string[10];
 		highScoresOnDisk = new string[10];
 
 		//Først skal vi sørge for at vores "keys" findes, og at vi kan hente fra dem
@@ -272,6 +277,7 @@ public class HighSoreScript : MonoBehaviour
             // If we haven´t enabled the user-input field yet, so we need to activate it
             if (inputNameFromUser != null && (!inputNameFromUser.enabled || !inputNameFromUser.gameObject.activeSelf))
             {
+                gameController.SetMainScreenUI(MainScreenController.UIState.InputName);
                 inputNameFromUser.gameObject.SetActive(true);
                 inputNameFromUser.enabled = true;
             }
@@ -280,6 +286,7 @@ public class HighSoreScript : MonoBehaviour
         {
             // If we don´t have a score to update, but the InputField is active, then we need to hide the field
             inputNameFromUser.gameObject.SetActive(false);
+            //gameController.SetMainScreenUI(MainScreenController.UIState.Highscore);
         }
 
     }
@@ -312,7 +319,8 @@ public class HighSoreScript : MonoBehaviour
         scoreFieldToUpdate = null;
 
         // Disable the inputField
-        otherField.gameObject.SetActive(false);
+        //otherField.gameObject.SetActive(false);
+        gameController.SetMainScreenUI(MainScreenController.UIState.Highscore);
     }
 	
 }

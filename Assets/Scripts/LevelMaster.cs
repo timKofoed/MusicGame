@@ -8,6 +8,26 @@ public class LevelMaster : MonoBehaviour {
 	public int levelScore;
 	public GameObject Spawn;
     public int health;
+
+    [SerializeField]
+    private bool shouldUseOverrideSettings = true;
+
+    [SerializeField]
+    private int overridePointsOnHit = 5;
+
+    [SerializeField]
+    private int overridePointsOnEnd = -5;
+
+    [SerializeField]
+    private bool overrideBad = true;
+
+    [SerializeField]
+    private AnimationCurve spawnProbability;
+
+    [SerializeField]
+    private AnimationCurve spawnPowerupProbability; //Override the selected node, and instead, spawn a power-up node
+
+    public Notes[] AvailablePowerups;
     public Notes[] AvailableNotes;
     public GameObject lifeIcon;
     public GameObject[] lifeArray;
@@ -35,11 +55,25 @@ public class LevelMaster : MonoBehaviour {
 
 		Spawn = GameObject.Find("SpawnPoint_Parent");
 		backgroundMusic = this.gameObject.GetComponent<AudioSource> ();
-		backgroundMusic.Stop ();	//make sure the music doesn't start on its own
-		//startLevel ();
+		backgroundMusic.Stop ();    //make sure the music doesn't start on its own
+                                    //startLevel ();
+
+        if(shouldUseOverrideSettings)
+            Debug.LogWarning("Overriding the Available notes' settings!");
 
         for (int i = 0; i < AvailableNotes.Length; i++)
         {
+            /* Overriding the settings */
+            if (shouldUseOverrideSettings)
+            {
+                AvailableNotes[i].bad = overrideBad;   //All nodes are "bad", so we have to click all of them
+                AvailableNotes[i].colour = new Color( Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));    //Random colour
+                AvailableNotes[i].hitValue = overridePointsOnHit;
+                AvailableNotes[i].endValue = overridePointsOnEnd;
+            }
+
+                
+
             if (AvailableNotes[i].scoreSystem == null)
             {
                 if(AvailableNotes[i].hitValue > 0)
@@ -50,6 +84,15 @@ public class LevelMaster : MonoBehaviour {
         }
 
 	}
+
+    public bool isNodeSpawnAccepted()
+    {
+        // Check the spawn curve and generate a random number between 0.0 and 1.0. If the random number > the curve value, then permit the spawning of a node
+        if ( Random.value < spawnProbability.Evaluate(backgroundMusic.time) )
+            return true;
+        else
+            return false;
+    }
 
     /// <summary>
     /// When a new Node is made, it should tell the level master that it exists
@@ -75,13 +118,22 @@ public class LevelMaster : MonoBehaviour {
 	    
 	}
 
+    public void SetAllNodeSpeed(float newSpeed)
+    {
+        for (int i = 0; i < nodesOnScreen.Count; i++)
+        {
+            nodesOnScreen[i].SetAnimationSpeed(newSpeed);
+        }
+    }
+
 	// Start the level and pass a reference to the gameController, so we have a reference to it
 	public void startLevel( GameController newGameController )
 	{
 		Debug.Log ("Starting level");
 		gameOver = false;
 		gameController = newGameController;
-		Spawn.GetComponent<SpawnScript> ().BeginSpawning ();
+        gameController.SetMainScreenUI(MainScreenController.UIState.Playing);
+        Spawn.GetComponent<SpawnScript> ().BeginSpawning ();
 		backgroundMusic.Play ();
 		health = maxHealth;	//reset the amount of health we have
 		levelScore = 0;
@@ -118,15 +170,46 @@ public class LevelMaster : MonoBehaviour {
     public Notes DetermineType()
     {
         Notes returnNote;
-        //assigns a random number to the object that determines the value
-        int typeValue = Random.Range(0, AvailableNotes.Length);
 
+        //Determine if we're going to spawn a powerUp or a regular node
+        if( Random.value < spawnPowerupProbability.Evaluate(backgroundMusic.time) )
+        {
+            //Make a powerUp node
+            //assigns a random number to the object that determines the value
+            int typeValue = Random.Range(0, AvailablePowerups.Length);
+            returnNote = AvailablePowerups[typeValue];
+        }
+        else
+        {
+            //Make a normal node
+            //assigns a random number to the object that determines the value
+            int typeValue = Random.Range(0, AvailableNotes.Length);
+            returnNote = AvailableNotes[typeValue];
+        }
 
-        returnNote = AvailableNotes[typeValue];
+        
         return returnNote;
      }
 
-    public void DH()
+    public void AddLife()
+    {
+        health++;
+    }
+
+    public void SetLevelSpeed(float speedMultiplier, float secondsToApply)
+    {
+        StartCoroutine( DefineLevelSpeed(speedMultiplier, secondsToApply) );
+    }
+
+    //Set the speed multiplier, wait for the defined number of seconds, and then set it back to 1
+    private IEnumerator DefineLevelSpeed(float speedMultiplier, float secondsToApply)
+    {
+        SetAllNodeSpeed(speedMultiplier);
+        yield return new WaitForSeconds(secondsToApply);
+        SetAllNodeSpeed(1.0f);
+    }
+
+    public void LoseLife()
     {
 		//If the game has already ended, then don't apply the lost health
 		if (gameOver)
@@ -174,6 +257,7 @@ public class LevelMaster : MonoBehaviour {
 public struct Notes
 {
     public string type;
+    public Node.PowerUpType powerUpType;
 
     public Material material;
 

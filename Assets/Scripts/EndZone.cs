@@ -30,7 +30,7 @@ public class EndZone : MonoBehaviour {
         if (other.GetComponent<Node>().bad == true)
         {
             //levelMaster.health -= 1;
-            levelMaster.DH();
+            levelMaster.LoseLife();
             Instantiate(badScorePartcle, other.gameObject.transform.position, Quaternion.identity);
         }
         else

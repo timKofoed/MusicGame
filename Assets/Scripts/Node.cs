@@ -4,7 +4,13 @@ using System.Collections;
 
 public class Node : MonoBehaviour 
 {
-
+    public enum PowerUpType
+    {
+        None = 0,
+        SpeedUp = 1,
+        SlowDown = 2,
+        ExtraLife = 3
+    }
     public Material material;
 
 	public int hitValue;
@@ -56,6 +62,10 @@ public class Node : MonoBehaviour
         
 	}
 
+    public void SetAnimationSpeed(float newSpeed)
+    {
+        this.gameObject.GetComponent<Animator>().speed = newSpeed;
+    }
 
     //gives point and destroyes gameobject when clicked by mouse
 	public void OnMouseDown ()
@@ -64,10 +74,27 @@ public class Node : MonoBehaviour
 
         //paticlesystem instantiates her
 
-        if (bad == false)
+        if(noteType.powerUpType != Node.PowerUpType.None)
         {
-            levelMaster.DH();
+            // This is a powerup
+            if (noteType.powerUpType == Node.PowerUpType.ExtraLife)
+                levelMaster.AddLife();
+            else if (noteType.powerUpType == Node.PowerUpType.SpeedUp)
+                levelMaster.SetLevelSpeed(1.2f, 5.0f);
+            else if (noteType.powerUpType == Node.PowerUpType.SlowDown)
+                levelMaster.SetLevelSpeed(0.8f, 5.0f);
         }
+        else
+        {
+            // This is a normal node
+
+            if (bad == false)
+            {
+                levelMaster.LoseLife();
+            }
+        }
+
+        
 
 		hitValue = Mathf.RoundToInt((float)hitValue / 5.0f) * 5;	//snap til 5, 10, 15, 20, etc.
         levelMaster.AddScore(hitValue);	//tilføj points

@@ -8,6 +8,8 @@ public class GameController : MonoBehaviour {
 	//Canvas objects to hide/show
 	public GameObject gameUI;
 	public GameObject mainScreen;
+    [SerializeField]
+    private MainScreenController mainScreenController;
 
 	public LevelMaster levelMaster;	//the current level master available (this could be mulitple levelMasters if we have more levels)
 	private HighSoreScript highScoreScript;
@@ -24,7 +26,8 @@ public class GameController : MonoBehaviour {
 	{
 		ResetLevel (false);
 		highScoreScript = this.gameObject.GetComponent<HighSoreScript> ();
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () 
@@ -38,6 +41,10 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+    public void SetMainScreenUI(MainScreenController.UIState newUIState)
+    {
+        mainScreenController.SetUIState(newUIState);
+    }
     
 	//Reset the level and optionally delay the ability to start the level. If you don't pass a parameter, then it will be "true".
 	public void ResetLevel(bool shouldDelay = true)
@@ -45,8 +52,11 @@ public class GameController : MonoBehaviour {
 		Debug.Log ("ResetLevel");
 		isWaitingForKeypress = true;
 		gameUI.SetActive (false);		//Hide the gameUI (score)
-		mainScreen.SetActive (true);	//Show the main screen (PressKeyToStart / Highscore?)
-		blinkingStartText.Blink ();
+		mainScreen.SetActive (true);    //Show the main screen (PressKeyToStart / Highscore?)
+        mainScreenController.SetUIState(MainScreenController.UIState.PressToStart);
+
+        //blinkingStartText.Blink (5.0f, 5.0f);
+
 
 		if(shouldDelay)
 			StartCoroutine (PreventLevelStart());
