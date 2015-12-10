@@ -18,8 +18,8 @@ TagManager:
   - TouchInput
   - NodeStrenge
   - Front
-  - 
-  - 
+  - Background
+  - BackgroundCollider
   - 
   - 
   - 

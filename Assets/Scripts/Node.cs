@@ -78,11 +78,11 @@ public class Node : MonoBehaviour
         {
             // This is a powerup
             if (noteType.powerUpType == Node.PowerUpType.ExtraLife)
-                levelMaster.AddLife();
+                levelMaster.AddHealth();
             else if (noteType.powerUpType == Node.PowerUpType.SpeedUp)
-                levelMaster.SetLevelSpeed(1.2f, 5.0f);
+                levelMaster.SetLevelSpeed(1.5f, 5.0f);
             else if (noteType.powerUpType == Node.PowerUpType.SlowDown)
-                levelMaster.SetLevelSpeed(0.8f, 5.0f);
+                levelMaster.SetLevelSpeed(0.5f, 5.0f);
         }
         else
         {

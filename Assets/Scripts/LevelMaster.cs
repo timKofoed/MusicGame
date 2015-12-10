@@ -10,6 +10,9 @@ public class LevelMaster : MonoBehaviour {
     public int health;
 
     [SerializeField]
+    private GameObject[] healthIcons;
+
+    [SerializeField]
     private bool shouldUseOverrideSettings = true;
 
     [SerializeField]
@@ -27,6 +30,9 @@ public class LevelMaster : MonoBehaviour {
     [SerializeField]
     private AnimationCurve spawnPowerupProbability; //Override the selected node, and instead, spawn a power-up node
 
+    [SerializeField]
+    private Color[] availableRandomColours;
+
     public Notes[] AvailablePowerups;
     public Notes[] AvailableNotes;
     public GameObject lifeIcon;
@@ -34,7 +40,8 @@ public class LevelMaster : MonoBehaviour {
     
 	private GameController gameController;
 	private AudioSource backgroundMusic;
-	private int maxHealth;
+	private int maxHealth = 5;
+    private int startHealth = 3;
 
     public bool gameOver = false;
     public float pitchOnSqueal;
@@ -47,10 +54,12 @@ public class LevelMaster : MonoBehaviour {
     [SerializeField]    //reveal this private field in the editor
     private List<Node> nodesOnScreen;
 
+    private int speedAlterationIndex = 0;   //preventing dual
+
     // Use this for initialization
     void Start ()
 	{
-		maxHealth = health;	//remember how much health we have in the beginning, so we can reset to that amount later   
+        ResetHealth();
         nodesOnScreen = new List<Node>(); //Make a 'new' List, so we're ready to put items into it
 
 		Spawn = GameObject.Find("SpawnPoint_Parent");
@@ -67,7 +76,8 @@ public class LevelMaster : MonoBehaviour {
             if (shouldUseOverrideSettings)
             {
                 AvailableNotes[i].bad = overrideBad;   //All nodes are "bad", so we have to click all of them
-                AvailableNotes[i].colour = new Color( Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));    //Random colour
+                int chosenColour = Random.Range(0, availableRandomColours.Length);
+                AvailableNotes[i].colour = availableRandomColours[chosenColour];
                 AvailableNotes[i].hitValue = overridePointsOnHit;
                 AvailableNotes[i].endValue = overridePointsOnEnd;
             }
@@ -112,10 +122,39 @@ public class LevelMaster : MonoBehaviour {
         nodesOnScreen.Remove(nodeToRemove);
     }
 
+    public void AddHealth()
+    {
+        health++;
+        UpdateHealthIcons();
+    }
+
+    public void RemoveHealth()
+    {
+        health--;
+        UpdateHealthIcons();
+    }
+
+    public void ResetHealth()
+    {
+        health = startHealth;
+        UpdateHealthIcons();
+    }
+
+    private void UpdateHealthIcons()
+    {
+        for (int i = 0; i < healthIcons.Length; i++)
+        {
+            if (health > i)
+                healthIcons[i].SetActive(true);
+            else
+                healthIcons[i].SetActive(false);
+        }
+    }
+
 	// Update is called once per frame
 	void Update ()
     {
-	    
+        
 	}
 
     public void SetAllNodeSpeed(float newSpeed)
@@ -135,15 +174,8 @@ public class LevelMaster : MonoBehaviour {
         gameController.SetMainScreenUI(MainScreenController.UIState.Playing);
         Spawn.GetComponent<SpawnScript> ().BeginSpawning ();
 		backgroundMusic.Play ();
-		health = maxHealth;	//reset the amount of health we have
-		levelScore = 0;
-
-        lifeArray = new GameObject[health];
-
-        for (int i = 0; i > health; i++)
-        {
-            lifeArray[i] = Instantiate(lifeIcon, new Vector3(24.0f - (i * 2), 13.0f, -6), Quaternion.identity) as GameObject;
-        }
+        ResetHealth();
+        levelScore = 0;
     }
 
 	public void StopLevel()
@@ -191,10 +223,6 @@ public class LevelMaster : MonoBehaviour {
         return returnNote;
      }
 
-    public void AddLife()
-    {
-        health++;
-    }
 
     public void SetLevelSpeed(float speedMultiplier, float secondsToApply)
     {
@@ -204,9 +232,13 @@ public class LevelMaster : MonoBehaviour {
     //Set the speed multiplier, wait for the defined number of seconds, and then set it back to 1
     private IEnumerator DefineLevelSpeed(float speedMultiplier, float secondsToApply)
     {
+        int myIndex = ++speedAlterationIndex;   //Remember which index we have, so that we don´t reset the next powerup´s value prematurely
+        
         SetAllNodeSpeed(speedMultiplier);
         yield return new WaitForSeconds(secondsToApply);
-        SetAllNodeSpeed(1.0f);
+        
+        if(speedAlterationIndex == myIndex)
+            SetAllNodeSpeed(1.0f);
     }
 
     public void LoseLife()
@@ -217,7 +249,7 @@ public class LevelMaster : MonoBehaviour {
 
         MusicSqueak();
 
-        health -= 1;
+        RemoveHealth();
         Debug.Log("Health left:" + health);
         if (health <= 0)
         {
@@ -242,8 +274,8 @@ public class LevelMaster : MonoBehaviour {
 
     private void GameOver()
     {
-		health = maxHealth;
-		StopLevel ();
+        ResetHealth();
+        StopLevel ();
 		gameController.ResetLevel ();
 		gameController.SubmitScore (levelScore, "");    //first, we need to check to see if made the highscore
 		levelScore = 0;
