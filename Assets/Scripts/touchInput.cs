@@ -13,7 +13,7 @@ public class touchInput : MonoBehaviour {
 	void Update () {
 
 
-		if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0)) {
+		if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0) || (Input.GetAxis("Fire1") > 0.2f) ) {
 			
 			touchOld = new GameObject[touchList.Count];		
 			touchList.CopyTo(touchOld);
@@ -27,17 +27,20 @@ public class touchInput : MonoBehaviour {
 					touchList.Add(recipient);
 					
 				//uses sendmessage to start a function called OnTouchDown
-				if (Input.GetMouseButtonDown(0)){
+				if (Input.GetMouseButtonDown(0) || (Input.GetAxis("Fire1") > 0.2f))
+                {
 						recipient.SendMessage("OnTouchDown",hit.point,SendMessageOptions.DontRequireReceiver);
 					}
                 
                 //uses sendmessage to start a function called OnTouchUp
-                if (Input.GetMouseButtonUp(0)){
+                if (Input.GetMouseButtonUp(0) || (Input.GetAxis("Fire1") > 0.2f))
+                {
 						recipient.SendMessage("OnTouchUp",hit.point,SendMessageOptions.DontRequireReceiver);
 					}
 
                 //uses sendmessage to start a function called OnTouchStay
-                if (Input.GetMouseButton(0)){
+                if (Input.GetMouseButton(0) || (Input.GetAxis("Fire1") > 0.2f))
+                {
 						recipient.SendMessage("OnTouchStay",hit.point,SendMessageOptions.DontRequireReceiver);
 					}
 					}

@@ -97,8 +97,9 @@ public class LevelMaster : MonoBehaviour {
 
     public bool isNodeSpawnAccepted()
     {
+        //Debug.Log("time ("+backgroundMusic.time+") --> ("+ (backgroundMusic.time % backgroundMusic.clip.length) +")");
         // Check the spawn curve and generate a random number between 0.0 and 1.0. If the random number > the curve value, then permit the spawning of a node
-        if ( Random.value < spawnProbability.Evaluate(backgroundMusic.time) )
+        if ( Random.value < spawnProbability.Evaluate(backgroundMusic.time % backgroundMusic.clip.length) )
             return true;
         else
             return false;
@@ -238,7 +239,7 @@ public class LevelMaster : MonoBehaviour {
         yield return new WaitForSeconds(secondsToApply);
         
         if(speedAlterationIndex == myIndex)
-            SetAllNodeSpeed(1.0f);
+            SetAllNodeSpeed(1.2f);
     }
 
     public void LoseLife()

@@ -21,8 +21,8 @@ public class TopCollider : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger!");
-        Destroy(other.gameObject);
+        //Debug.Log("Trigger!");
+        Destroy(other.gameObject.transform.root.gameObject);
     }
 
 }

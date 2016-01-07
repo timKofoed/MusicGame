@@ -3,27 +3,38 @@ using System.Collections;
 
 public class BackgroundFloatingObject : MonoBehaviour {
 
+    public bool moveProcedurally = false;
     public float rotationalSpeed = 1.0f;
     public float heightVelocity = 0.5f;
     private Rigidbody myRigidbody;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+    
+
+    public BackgroundController backgroundController;
+
+    // Use this for initialization
+    void Start ()
+    {
+        
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 
-        if (myRigidbody == null)
-            myRigidbody = this.gameObject.GetComponent<Rigidbody>();
-
-        if(myRigidbody != null)
+        if (moveProcedurally)
         {
-            Move();
+            if (myRigidbody == null)
+                myRigidbody = this.gameObject.GetComponent<Rigidbody>();
 
-            Turn();
-        }        
+            if (myRigidbody != null)
+            {
+                Move();
+
+                Turn();
+            }
+        }
+               
     }
 
     private void Move()
@@ -45,5 +56,10 @@ public class BackgroundFloatingObject : MonoBehaviour {
 
         // Apply this rotation to the rigidbody's rotation.
         myRigidbody.MoveRotation(myRigidbody.rotation * turnRotation);
+    }
+
+    public void DestroyObject()
+    {
+        Destroy(this.gameObject);
     }
 }
